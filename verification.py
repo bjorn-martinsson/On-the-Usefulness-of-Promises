@@ -250,31 +250,22 @@ def is_hard(predicate: list[str]) -> bool:
     UnDADA_free = hardness_conditions.check_UnDADA_free.check
 
     if ADA_free(predicate):
-        print('Is ADA-free')
         # Theorem 5.16
         if bounded_matching(predicate):
-            print('Hard by 5.16')
             return True
         
         # Theorem 5.17
         if bounded_inverted_matching(predicate):
-            print('Hard by 5.17')
             return True
         
         if unate(predicate):
             # Theorem 5.18
             if ANDNOR_free(predicate):
-                print('Hard by 5.18')
                 return True
         
             # Theorem 5.21
             if UnCADA_free(predicate) and UnDADA_free(predicate):
-                print('Hard by 5.21')
                 return True
-        else:
-            print('Is not unate!')
-            print('UnCADA?', UnCADA_free(predicate))
-            print('UnDADA?', UnDADA_free(predicate))
 
     return False
 
@@ -287,11 +278,9 @@ def verify_hardness(k: int) -> bool:
     maximal_tractable, minimal_hard, maximal_unknown, minimal_unknown = get_tables(k)
 
     for predicate in minimal_hard:
-        print('Doing predicate', predicate)
         assert is_hard(predicate)
     
     for predicate in maximal_tractable + minimal_unknown + maximal_unknown:
-        print('Doing predicate', predicate)
         assert not is_hard(predicate)
     
     return True
